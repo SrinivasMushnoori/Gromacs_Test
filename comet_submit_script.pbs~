@@ -1,0 +1,29 @@
+#!/bin/bash
+
+#SBATCH --partition=compute
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=24
+#SBATCH -t 24:00:00
+#SBATCH --job-name="FF-FNF-0"
+#PBS -o FF-FNF-0.out
+#PBS -e FF-FNF-0.err
+#PBS -A rut129
+#SBATCH --mail-user=kls319@scarletmail.rutgers.edu
+#SBATCH --mail-type=all
+
+
+module unload intel
+module load gromacs/5.1.2
+
+
+pwd
+date
+
+/opt/gromacs/bin/gmx_mpi grompp -f dynamic2.mdp -c em_results.gro -o equilibrium.tpr -p Martini.top
+
+ibrun /opt/gromacs/bin/gmx_mpi mdrun -s equilibrium.tpr -v -deffnm eq_results
+
+pwd                                                                                                                                             
+
+
+
